@@ -8,7 +8,7 @@
 </head>
 <body style="background-color: cyan;">
 
-	<form action="Employees" method="post">
+	<form action="/ModifyEmployeeServlet" method="post">
 		<!-- -need to mention method=post -->
 
 		<center>

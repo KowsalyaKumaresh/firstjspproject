@@ -9,8 +9,20 @@
 <title>Employee List</title>
 </head>
 <body>
-<table> 
-<thead> </thead>
+<table border="2"> 
+<thead>
+<th  colspan = "7">Details of All the Employee </th>
+<tr>
+<th>Emp_Id</th>
+<th>First_Name</th>
+<th>Last_Name</th>
+<th>Email</th>
+<th>Hire_Date</th>
+<th>Job_Id</th>
+<th>Salary</th>
+
+</tr></thead>
+<br>
 <% 
 List<Employee> allEmployee = (ArrayList<Employee>)request.getAttribute("emplist");
 for(Employee emp: allEmployee){

@@ -4,12 +4,12 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Adding Employee</title>
+<title>Delete Employee</title>
 </head>
 <body>
 <%
-  int result = (int)request.getAttribute("addemp");
+  int result = (int)request.getAttribute("deleteemp");
   %>
-  <div>Add Employee: <%=result%></div>
+  <div>Delete Employee: <%=result%></div>
 </body>
 </html>
