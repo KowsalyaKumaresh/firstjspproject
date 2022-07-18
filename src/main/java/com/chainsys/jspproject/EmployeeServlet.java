@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.annotation.WebServlet;
@@ -23,24 +24,19 @@ import com.chainsys.jspproject.commonutil.Validator;
 
 
 @WebServlet("/Employees")
-public class Employees extends HttpServlet {
+public class EmployeeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     
-    public Employees() {
+    public EmployeeServlet() {
         super();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	  List<Employee> allEmployee = EmployeeDao.getAllEmployee();
-	  Iterator<Employee> empIterator = allEmployee.iterator();
-	  PrintWriter out = response.getWriter();
-	  while(empIterator.hasNext()) {
-		  Employee emp = empIterator.next();
-		  out.println("</hr>");
-		  out.print(emp.getEmp_id() + ", " + emp.getFirst_name() + ", " + emp.getLast_name() + " ," + emp.getEmail()
-					+ ", " + emp.getJob_id() + " ," + emp.getSalary() + "</p>");
-		  }
+	request.setAttribute("emplist", allEmployee);
+	RequestDispatcher rd = request.getRequestDispatcher("/viewEmployee.jsp");
+	rd.forward(request, response);
 	
 	}
 
@@ -62,14 +58,14 @@ public class Employees extends HttpServlet {
 			 message += "Error in Employee id :</p>";
 			 String errorPage = ExceptionManager.handleException(err, source, message);
 			 out.print(errorPage);
-			 return;
+			 return ;
 			 
 		 }
 		 try {
 				Validator.checkNumberForGreaterThanZero(empId);
 				newEmp.setEmp_id(empId);
 			} catch (InvalidInputDataException err) {
-				message += " Error in Employee id input: <p/>";
+				message += " Error in Employee id input: </p>";
 				String errorPage = ExceptionManager.handleException(err, source, message);
 				out.print(errorPage);
 				return;
@@ -80,7 +76,7 @@ public class Employees extends HttpServlet {
 				Validator.checklengthOfString(Fname);
 				newEmp.setFirst_name(Fname);
 			} catch (InvalidInputDataException err) {
-				message += " Error in Employee first name input: <p/>";
+				message += " Error in Employee first name input: </p>";
 				String errorPage = ExceptionManager.handleException(err, source, message);
 				out.print(errorPage);
 				return;			}
@@ -93,7 +89,7 @@ public class Employees extends HttpServlet {
 				Validator.checklengthOfString(Lname);
 				newEmp.setLast_name(Lname);
 			} catch (InvalidInputDataException err) {
-				message += " Error in Employee last name input: <p/>";
+				message += " Error in Employee last name input: </p>";
 				String errorPage = ExceptionManager.handleException(err, source, message);
 				out.print(errorPage);
 				return;
@@ -106,7 +102,7 @@ public class Employees extends HttpServlet {
 				Validator.checkEmail(email);
 				newEmp.setEmail(email);
 			} catch (InvalidInputDataException e) {
-				message += " Error in Employee email input: <p/>";
+				message += " Error in Employee email input: </p>";
 				String errorPage = ExceptionManager.handleException(e, source, message);
 				out.print(errorPage);
 				return;
@@ -119,7 +115,7 @@ public class Employees extends HttpServlet {
 				Validator.checkJobId(jobid);
 				newEmp.setJob_id(jobid);
 			} catch (InvalidInputDataException err) {
-				message += " Error in Employee job_id input: <p/>";
+				message += " Error in Employee job_id input: </p>";
 				String errorPage = ExceptionManager.handleException(err, source, message);
 				out.print(errorPage);
 				return;}
@@ -131,7 +127,7 @@ public class Employees extends HttpServlet {
 				date = new SimpleDateFormat("dd/MM/yyyy").parse(sDate);
 
 			} catch (ParseException e) {
-				message += " Error in Employee hire_date input: <p/>";
+				message += " Error in Employee hire_date input: </p>";
 				String errorPage = ExceptionManager.handleException(e, source, message);
 				out.print(errorPage);
 				return;
@@ -140,7 +136,7 @@ public class Employees extends HttpServlet {
 				Validator.checkDateFormat(sDate);
 				newEmp.setHire_date(date);
 			} catch (InvalidInputDataException err) {
-				message += " Error in Employee hire_date input: <p/>";
+				message += " Error in Employee hire_date input: </p>";
 				String errorPage = ExceptionManager.handleException(err, source, message);
 				out.print(errorPage);
 				return;			}
@@ -153,7 +149,7 @@ public class Employees extends HttpServlet {
 				fsalary = Float.parseFloat(salary);
 
 			} catch (InvalidInputDataException err) {
-				message += " Error in Employee salary input: <p/>";
+				message += " Error in Employee salary input: </p>";
 				String errorPage = ExceptionManager.handleException(err, source, message);
 				out.print(errorPage);
 				return;
@@ -162,16 +158,17 @@ public class Employees extends HttpServlet {
 				Validator.checkSalLimit(fsalary);
 				newEmp.setSalary(fsalary);
 			} catch (InvalidInputDataException err) {
-				message += " Error in Employee salary input: <p/>";
+				message += " Error in Employee salary input: </p>";
 				String errorPage = ExceptionManager.handleException(err, source, message);
 				out.print(errorPage);
 				return;
 			}
 			int result = EmployeeDao.insertEmployee(newEmp);
-
-			out.println("<div> Add New Employee: " + result + "</div>");// do not give object only browser response to
-																		// string
-			}else if(submitvalue.equals("Update Employee")) {
+			request.setAttribute("addemp", result);
+			RequestDispatcher rd = request.getRequestDispatcher("/addemployee.jsp");
+			rd.forward(request, response);
+			
+            }else if(submitvalue.equals("Update Employee")) {
 				doPut(request, response);
 			}else if(submitvalue.equals("Delete Employee")) {
 				doDelete(request, response);
@@ -201,7 +198,7 @@ public class Employees extends HttpServlet {
 					Validator.checkNumberForGreaterThanZero(empId);
 					newEmp.setEmp_id(empId);
 				} catch (InvalidInputDataException err) {
-					message += " Error in Employee id input: <p/>";
+					message += " Error in Employee id input: </p>";
 					String errorPage = ExceptionManager.handleException(err, source, message);
 					out.print(errorPage);
 					return;
@@ -212,7 +209,7 @@ public class Employees extends HttpServlet {
 					Validator.checklengthOfString(Fname);
 					newEmp.setFirst_name(Fname);
 				} catch (InvalidInputDataException err) {
-					message += " Error in Employee first name input: <p/>";
+					message += " Error in Employee first name input: </p>";
 					String errorPage = ExceptionManager.handleException(err, source, message);
 					out.print(errorPage);
 					return;			}

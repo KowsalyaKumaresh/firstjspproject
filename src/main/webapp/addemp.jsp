@@ -4,23 +4,64 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Add new Emp</title>
+<title>Adding New Employee </title>
 </head>
 <body>
-<form action="AddEmployee" method = "post">
-<div>
-<label for = "name">Name:</label>
-<input id = "name" type = "text" placeholder = "Enter name">
-</div>
-<div>
-<label for = "city">Name:</label>
-<input id = "city" type = "text" placeholder = "Enter city">
-</div>
-<div>
-<label for = "salary">Name:</label>
-<input id = "salary" type = "text" placeholder = "Enter salary">
-</div>
-<input type = "submit" value = "add">
-</form>
+<form action="Employees" method="post">
+
+		<center>
+			<h2>Add Employee</h2>
+			<table>
+				<tbody>
+					<tr>
+						<div>
+							<td>ID:</td>
+							<td><input type='text' name='id'></td>
+						</div>
+					</tr>
+					<tr>
+
+						<div>
+							<!--  key should be in lower case -->
+							<td>First Name:</td>
+							<td><input type='text' name='fname'></td>
+						</div>
+					</tr>
+					<tr>
+						<div>
+							<!--  key should be in lower case -->
+							<td>Last Name:</td>
+							<td><input type='text' name='lname'></td>
+						</div>
+					</tr>
+					<div>
+						<tr>
+							<td>Email:</td>
+							<td><input type='text' name='email'></td>
+					</div>
+					</tr>
+					<tr>
+						<div>
+							<td>Job_Id:</td>
+							<td><input type='text' name='jobid'></td>
+						</div>
+					</tr>
+					<tr>
+						<div>
+							<td>Hire Date:</td>
+							<td><input type='text' name='hdate'></td>
+						</div>
+					</tr>
+					<tr>
+						<div>
+							<td>Salary:</td>
+							<td><input type='text' name='salary'></td>
+						</div>
+					</tr>
+					<tr rowspan=2>
+						<div>
+							<td><input type='submit' value='Add Employee' name='submit'></td>
+						</div>
+						<div>
 </body>
 </html>
